@@ -1,0 +1,24 @@
+{
+  "name": "minecraftcontrol",
+  "version": "0.1.0",
+  "description": "Control Minecraft with RobotJS",
+  "main": "main.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://moritz-t-w/MinecraftControl"
+  },
+  "keywords": [
+    "minecraft",
+    "automation",
+    "robotjs",
+    "nodejs"
+  ],
+  "author": "Moritz Tim W.",
+  "license": "MIT",
+  "dependencies": {
+    "robotjs": "^0.6.0"
+  }
+}
