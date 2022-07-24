@@ -6,20 +6,35 @@
 
 import robot from 'robotjs';
 
+const defaultPrefix = '/';
+const optionsFilePath = '/options.txt';
+
 /** Represents an instance of Minecraft */
 class Minecraft {
+
+	/**
+	 * Create a new Minecraft instance
+	 * @param {string} root `.minecraft` dir location
+	 * @param {string} [version] version name
+	 * @param {Chat} [chat] Instance of Chat
+	 * @param {Command[]} [commands] available commands
+	 */
+	constructor(root, version, chat, commands) {
+		this(this.getOptions(root + optionsFilePath), version, chat, commands);
+    }
+
     /**
      * Create a new Minecraft instance
-     * @param {string} version version name
-     * @param {string} root .minecraft dir location
-     * @param {Chat} chat Instance of Chat
-     * @param {Command[]} commands available commands
+     * @param {string} options contents of options.txt parsed using {@link getOptions()} 
+     * @param {string} [version] version name
+     * @param {Chat} [chat] Instance of Chat
+     * @param {Command[]} [commands] available commands
      */
-    constructor(version, root, chat, commands) {
-        this.version = version;
-        this.options = this.getOptions(`${root}/options.txt`);
-        this.chat = chat;
-        this.commands = commands;
+    constructor(options, version, chat, commands) {
+        this.options = options;
+		if (version != undefined) this.version = version;
+		this.chat = chat ?? new Chat(this.options['key_key.chat'], this.options['key_key.command'], defaultPrefix);
+        if (commands != undefined) this.commands = commands;
     }
 
     /**
