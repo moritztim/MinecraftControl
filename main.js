@@ -17,7 +17,7 @@ class Minecraft {
      */
     constructor(version, options, chat, commands) {
         this.version = version;
-        this.config = options;
+        this.options = options;
         this.chat = chat;
         this.commands = commands;
     }
