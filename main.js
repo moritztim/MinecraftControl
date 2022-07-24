@@ -21,6 +21,22 @@ class Minecraft {
         this.chat = chat;
         this.commands = commands;
     }
+
+    /**
+     * Get options from options.txt
+     * @param {string} optionsFilePath path to options.txt
+     * @returns options object
+     */
+    getOptions(optionsFilePath) {
+        options = {};
+        let optionsFile = fs.readFileSync(optionsFilePath, 'utf8'); // key:value\nkey:value\n...
+        let pairs = optionsFile.split('\n'); // key:value
+        pairs.forEach(pair => {
+            let pair = pair.split(':');
+            options[pair[0]] = pair[1];
+        });
+        return options;
+    }
 }
 
 /** Represents the chat within an instance of Minecraft */
