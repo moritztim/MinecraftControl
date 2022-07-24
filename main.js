@@ -11,13 +11,13 @@ class Minecraft {
     /**
      * Create a new Minecraft instance
      * @param {string} version version name
-     * @param {object} options configuration options from options.txt
+     * @param {string} root .minecraft dir location
      * @param {Chat} chat Instance of Chat
      * @param {Command[]} commands available commands
      */
-    constructor(version, options, chat, commands) {
+    constructor(version, root, chat, commands) {
         this.version = version;
-        this.options = options;
+        this.options = this.getOptions(`${root}/options.txt`);
         this.chat = chat;
         this.commands = commands;
     }
