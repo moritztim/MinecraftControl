@@ -20,7 +20,7 @@ class Minecraft {
 	 * @param {Command[]} [commands] available commands
 	 */
 	constructor(root, version, chat, commands) {
-		this(this.getOptions(root + optionsFilePath), version, chat, commands);
+		this(Minecraft.getOptions(root + optionsFilePath), version, chat, commands);
     }
 
     /**
@@ -42,7 +42,7 @@ class Minecraft {
      * @param {string} optionsFilePath path to options.txt
      * @returns options object
      */
-    getOptions(optionsFilePath) {
+    static getOptions(optionsFilePath) {
         options = {};
         let optionsFile = fs.readFileSync(optionsFilePath, 'utf8'); // key:value\nkey:value\n...
         let pairs = optionsFile.split('\n'); // key:value
