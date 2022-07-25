@@ -2,9 +2,9 @@
   "name": "minecraftcontrol",
   "version": "0.1.0",
   "description": "Control Minecraft with RobotJS",
-  "main": "main.js",
+  "main": "main.mjs",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.mjs"
   },
   "repository": {
     "type": "git",
