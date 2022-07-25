@@ -76,9 +76,26 @@ class Chat {
 class Command {
     /**
      * Create a new Command instance
-     * @param {string|string[]} names the name and aliases of the command
+     * @param {string|string[]} names name and aliases
+	 * @param {Parameter|Parameter[]} [params] parameters
      */
-    constructor(...names) {
+    constructor(names, ...params) {
         this.names = names;
+		this.params = params;
     }
+}
+
+/* Represents a parameter for a command within an instance of Minecraft */
+class Parameter {
+	/**
+	 * Create a new Parameter instance
+	 * @param {string} name name
+	 * @param {string} [type] value type
+	 * @param {boolean} [required] required
+	 */
+	constructor(name, type, type, required = false) {
+		this.name = name;
+		this.type = type;
+		this.required = required;
+	}
 }
