@@ -58,14 +58,15 @@ class Minecraft {
 class Chat {
     /**
      * Create a new Chat instance
-     * @param {string} key the key to open the chat
-     * @param {string} commandKey the key to open the chat with the command prefix already typed
-     * @param {string} commandPrefix the command prefix
-     * @param {Command[]} commands available commands
+     * @param {string} [key] the key to open the chat
+     * @param {string} [commandKey] the key to open the chat with the command prefix already typed
+     * @param {string} [commandPrefix] the command prefix
+     * @param {Command[]} [commands] available commands
      */
-    constructor(key, commandKey, commandPrefix, commands) {
-        this.key = key;
-        this.commandKey = commandKey;
+    constructor(key, commandKey, commandPrefix = '/', commands = []) {
+		let defaultOptions = Minecraft.getOptions('default.options.txt');
+        this.key = key ?? defaultOptions['key_key.chat'];
+        this.commandKey = commandKey ?? defaultOptions['key_key.command'];
         this.commandPrefix = commandPrefix;
 		this.commands = commands;
     }
