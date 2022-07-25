@@ -85,7 +85,7 @@ class Command {
     }
 }
 
-/* Represents a parameter for a command within an instance of Minecraft */
+/** Represents a parameter for a command within an instance of Minecraft */
 class Parameter {
 	/**
 	 * Create a new Parameter instance
@@ -93,7 +93,7 @@ class Parameter {
 	 * @param {string} [type] value type
 	 * @param {boolean} [required] required
 	 */
-	constructor(name, type, type, required = false) {
+	constructor(name, type, required = false) {
 		this.name = name;
 		this.type = type;
 		this.required = required;
