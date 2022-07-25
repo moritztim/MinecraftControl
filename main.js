@@ -63,10 +63,11 @@ class Chat {
      * @param {string} commandPrefix the command prefix
      * @param {Command[]} commands available commands
      */
-    constructor(key, commandKey, commandPrefix) {
+    constructor(key, commandKey, commandPrefix, commands) {
         this.key = key;
         this.commandKey = commandKey;
         this.commandPrefix = commandPrefix;
+		this.commands = commands;
     }
 }
 
