@@ -12,26 +12,16 @@ const optionsFilePath = '/options.txt';
 /** Represents an instance of Minecraft */
 class Minecraft {
 
-	/**
-	 * Create a new Minecraft instance
-	 * @param {string} root `.minecraft` dir location
-	 * @param {string} [version] version name
-	 * @param {Chat} [chat] Instance of Chat
-	 * @param {Command[]} [commands] available commands
-	 */
-	constructor(root, version, chat, commands) {
-		this(Minecraft.getOptions(root + optionsFilePath), version, chat, commands);
-    }
-
     /**
      * Create a new Minecraft instance
-     * @param {string} options contents of options.txt parsed using {@link getOptions()} 
+     * @param {string} root `.minecraft` dir location
      * @param {string} [version] version name
      * @param {Chat} [chat] Instance of Chat
      * @param {Command[]} [commands] available commands
      */
-    constructor(options, version, chat, commands) {
-        this.options = options;
+    constructor(root, version, chat, commands) {
+        this.root = root;
+		this.options = Minecraft.getOptions(root + optionsFilePath);
 		if (version != undefined) this.version = version;
 		this.chat = chat ?? new Chat(this.options['key_key.chat'], this.options['key_key.command'], defaultPrefix);
         if (commands != undefined) this.commands = commands;
