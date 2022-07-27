@@ -5,6 +5,8 @@
  */
 
 import robot from 'robotjs';
+import os from 'os';
+import path from 'path';
 
 const defaultPrefix = '/';
 const optionsFilePath = '/options.txt';
@@ -14,13 +16,32 @@ class Minecraft {
 
     /**
      * Create a new Minecraft instance
-     * @param {string} root `.minecraft` dir location
+     * @param {string} [root] `.minecraft` dir location
      * @param {string} [version] version name
      * @param {Chat} [chat] Instance of Chat
      * @param {Command[]} [commands] available commands
      */
     constructor(root, version, chat, commands) {
-        this.root = root;
+		if (root === undefined){
+			this.root = root;
+		} else {
+			/** root path as array of dirs without the string 'minecraft' */
+			let preRoot;
+			switch (os.platform) {
+				case 'win32': // Windows
+					preRoot = ['%AppData%','Roaming','.'];
+					break;
+				case 'darwin': // MacOS
+					preRoot = ['~', 'Library', 'Application Support'];
+					break;
+				case 'linux':
+					preRoot = ['~', '.'];
+					break;
+				default:
+					throw new Error('Unsupported OS');
+			}
+			this.root = preRoot.join(path.sep) + 'minecraft';
+		}
 		this.options = Minecraft.getOptions(root + optionsFilePath);
 		if (version != undefined) this.version = version;
 		this.chat = chat ?? new Chat(this.options['key_key.chat'], this.options['key_key.command'], defaultPrefix);
