@@ -9,7 +9,7 @@ import os from 'os';
 import path from 'path';
 
 const defaultPrefix = '/';
-const optionsFilePath = '/options.txt';
+const optionsFilePath = path.sep + 'options.txt';
 
 /** Represents an instance of Minecraft */
 class Minecraft {
