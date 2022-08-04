@@ -22,29 +22,29 @@ class Minecraft {
      * @param {Command[]} [commands] available commands
      */
     constructor(root, version, chat, commands) {
-		if (root === undefined){
-			this.root = root;
-		} else {
-			/** root path as array of dirs without the string 'minecraft' */
-			let preRoot;
-			switch (os.platform) {
-				case 'win32': // Windows
-					preRoot = ['%AppData%','Roaming','.'];
-					break;
-				case 'darwin': // MacOS
-					preRoot = ['~', 'Library', 'Application Support'];
-					break;
-				case 'linux':
-					preRoot = ['~', '.'];
-					break;
-				default:
-					throw new Error('Unsupported OS');
-			}
-			this.root = preRoot.join(path.sep) + 'minecraft';
-		}
-		this.options = Minecraft.getOptions(root + optionsFilePath);
-		if (version != undefined) this.version = version;
-		this.chat = chat ?? new Chat(this.options['key_key.chat'], this.options['key_key.command'], defaultPrefix);
+        if (root === undefined) {
+            this.root = root;
+        } else {
+            /** root path as array of dirs without the string 'minecraft' */
+            let preRoot;
+            switch (os.platform) {
+                case 'win32': // Windows
+                    preRoot = ['%AppData%', 'Roaming', '.'];
+                    break;
+                case 'darwin': // MacOS
+                    preRoot = ['~', 'Library', 'Application Support'];
+                    break;
+                case 'linux':
+                    preRoot = ['~', '.'];
+                    break;
+                default:
+                    throw new Error('Unsupported OS');
+            }
+            this.root = preRoot.join(path.sep) + 'minecraft';
+        }
+        this.options = Minecraft.getOptions(root + optionsFilePath);
+        if (version != undefined) this.version = version;
+        this.chat = chat ? ? new Chat(this.options['key_key.chat'], this.options['key_key.command'], defaultPrefix);
         if (commands != undefined) this.commands = commands;
     }
 
@@ -75,11 +75,11 @@ class Chat {
      * @param {Command[]} [commands] available commands
      */
     constructor(key, commandKey, commandPrefix = '/', commands = []) {
-		let defaultOptions = Minecraft.getOptions('default.options.txt');
-        this.key = key ?? defaultOptions['key_key.chat'];
-        this.commandKey = commandKey ?? defaultOptions['key_key.command'];
+        let defaultOptions = Minecraft.getOptions('default.options.txt');
+        this.key = key ? ? defaultOptions['key_key.chat'];
+        this.commandKey = commandKey ? ? defaultOptions['key_key.command'];
         this.commandPrefix = commandPrefix;
-		this.commands = commands;
+        this.commands = commands;
     }
 
 	/**
@@ -132,25 +132,25 @@ class Command {
     /**
      * Create a new Command instance
      * @param {string|string[]} names name and aliases
-	 * @param {Parameter|Parameter[]} [params] parameters
+     * @param {Parameter|Parameter[]} [params] parameters
      */
     constructor(names, ...params) {
         this.names = names;
-		this.params = params;
+        this.params = params;
     }
 }
 
 /** Represents a parameter for a command within an instance of Minecraft */
 class Parameter {
-	/**
-	 * Create a new Parameter instance
-	 * @param {string} name name
-	 * @param {string} [type] value type
-	 * @param {boolean} [required] required
-	 */
-	constructor(name, type, required = false) {
-		this.name = name;
-		this.type = type;
-		this.required = required;
-	}
+    /**
+     * Create a new Parameter instance
+     * @param {string} name name
+     * @param {string} [type] value type
+     * @param {boolean} [required] required
+     */
+    constructor(name, type, required = false) {
+        this.name = name;
+        this.type = type;
+        this.required = required;
+    }
 }
