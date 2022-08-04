@@ -81,6 +81,50 @@ class Chat {
         this.commandPrefix = commandPrefix;
 		this.commands = commands;
     }
+
+	/**
+	 * Open the chat input field
+	 * CAUTION: only works if the chat is not already open
+	*/
+	async open() {
+		return new Promise((resolve, reject) => {
+			robot.keyTap(this.key);
+			setTimeout(() => { resolve(); }, 100); // wait for the chat to open
+		});
+	}
+
+	/** Add a message to the chat input field
+	 * CAUTION: only works if the chat is already open
+	 * @param {string} message the string to add
+	*/
+	add(message) {
+		robot.typeString(message);
+	}
+
+	/**
+	 * Open the chat and type the given message
+	 * CAUTION: only works if the chat is not already open
+	 * @param {string} message the string to type
+	*/
+	send(message) {
+		await this.open();
+		this.add(message);
+	}
+
+	/** Open the chat input field with the command prefix */
+	async openCommand() {
+		return new Promise((resolve, reject) => {
+			robot.keyTap(this.commandKey);
+			setTimeout(() => { resolve(); }, 100); // wait for the command to open
+		});
+	}
+
+	/** Close the chat input field
+	 * CAUTION: only works if the chat is open
+	*/
+	close() {
+		robot.keyTap("escape")
+	}
 }
 
 /** Represents a command within an instance of Minecraft */
