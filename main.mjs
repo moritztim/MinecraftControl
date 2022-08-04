@@ -44,7 +44,7 @@ class Minecraft {
         }
         this.options = Minecraft.getOptions(root + optionsFilePath);
         if (version != undefined) this.version = version;
-        this.chat = chat ? ? new Chat(this.options['key_key.chat'], this.options['key_key.command'], defaultPrefix);
+        this.chat = chat ?? new Chat(this.options['key_key.chat'], this.options['key_key.command'], defaultPrefix);
         if (commands != undefined) this.commands = commands;
     }
 
@@ -76,8 +76,8 @@ class Chat {
      */
     constructor(key, commandKey, commandPrefix = '/', commands = []) {
         let defaultOptions = Minecraft.getOptions('default.options.txt');
-        this.key = key ? ? defaultOptions['key_key.chat'];
-        this.commandKey = commandKey ? ? defaultOptions['key_key.command'];
+        this.key = key ?? defaultOptions['key_key.chat'];
+        this.commandKey = commandKey ?? defaultOptions['key_key.command'];
         this.commandPrefix = commandPrefix;
         this.commands = commands;
     }
