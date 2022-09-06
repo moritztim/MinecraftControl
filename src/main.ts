@@ -21,10 +21,10 @@ class Minecraft {
 
     /**
      * Create a new Minecraft instance
-     * @param {string} [root] `.minecraft` dir location
-     * @param {Chat} [chat] Instance of Chat
-	 * @param {string} [version] version name
-	 * @param { { [x: string]: string; } | {string} } [options] options or path to options.txt
+     * @param root `.minecraft` dir location
+     * @param chat Instance of Chat
+	 * @param version version name
+	 * @param options options or path to options.txt
      */
     constructor(root?: string, chat?: Chat, version?: string, options?: { [x: string]: string; } | string) {
         if (root != undefined) {
@@ -54,7 +54,7 @@ class Minecraft {
 
     /**
      * Get options from options.txt
-     * @param {string} optionsFilePath path to options.txt
+     * @param optionsFilePath path to options.txt
      * @returns options object
      */
     static getOptions(optionsFilePath: string) {
@@ -77,10 +77,10 @@ class Chat {
 	commands?: Command[];
     /**
      * Create a new Chat instance
-     * @param {string} [key] the key to open the chat
-     * @param {string} [commandKey] the key to open the chat with the command prefix already typed
-     * @param {string} [commandPrefix] the command prefix
-     * @param {Command[]} [commands] available commands
+     * @param key the key to open the chat
+     * @param commandKey the key to open the chat with the command prefix already typed
+     * @param commandPrefix the command prefix
+     * @param commands available commands
      */
     constructor(key: string, commandKey: string, commandPrefix: string = '/', commands?: Command[]) {
         let defaultOptions = Minecraft.getOptions('./default.options.txt');
@@ -103,7 +103,7 @@ class Chat {
 
     /** Add a message to the chat input field
      * CAUTION: only works if the chat is already open
-     * @param {string} message the string to add
+     * @param message the string to add
      */
     add(message: string) {
         robot.typeString(message);
@@ -112,7 +112,7 @@ class Chat {
     /**
      * Open the chat and type the given message
      * CAUTION: only works if the chat is not already open
-     * @param {string} message the string to type
+     * @param message the string to type
      */
     async send(message: string) {
         await this.open();
@@ -141,8 +141,8 @@ class Command {
 	params: Parameter[];
     /**
      * Create a new Command instance
-     * @param {string|string[]} names name and aliases
-     * @param {Parameter[]} [params] parameters
+     * @param names name and aliases
+     * @param params parameters
      */
     constructor(names: string | string[], ...params: Parameter[]) {
         this.names = names;
@@ -157,9 +157,9 @@ class Parameter {
 	required: boolean;
     /**
      * Create a new Parameter instance
-     * @param {string} name name
-     * @param {string} [type] value type
-     * @param {boolean} [required] required
+     * string name name
+     * string type value type
+     * boolean required required
      */
     constructor(name: string, type: string, required: boolean = false) {
         this.name = name;
