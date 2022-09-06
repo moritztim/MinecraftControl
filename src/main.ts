@@ -7,27 +7,33 @@
 import robot from 'robotjs';
 import os from 'os';
 import path from 'path';
+import fs from 'fs';
 
 const defaultPrefix = '/';
 const optionsFilePath = path.sep + 'options.txt';
 
 /** Represents an instance of Minecraft */
 class Minecraft {
+	root?: string;
+	options: any;
+	chat?: Chat;
+	commands?: Command[];
+	version?: string;
 
     /**
      * Create a new Minecraft instance
      * @param {string} [root] `.minecraft` dir location
-     * @param {string} [version] version name
      * @param {Chat} [chat] Instance of Chat
      * @param {Command[]} [commands] available commands
+	 * @param {string} [version] version name
      */
-    constructor(root, version, chat, commands) {
+    constructor(root?: string, chat?: Chat, commands?: Command[], version?: string) {
         if (root === undefined) {
             this.root = root;
         } else {
             /** root path as array of dirs without the string 'minecraft' */
             let preRoot;
-            switch (os.platform) {
+            switch (os.platform()) {
                 case 'win32': // Windows
                     preRoot = ['%AppData%', 'Roaming', '.'];
                     break;
@@ -53,13 +59,13 @@ class Minecraft {
      * @param {string} optionsFilePath path to options.txt
      * @returns options object
      */
-    static getOptions(optionsFilePath) {
-        options = {};
+    static getOptions(optionsFilePath: string) {
+        let options: { [x: string]: string; } = {};
         let optionsFile = fs.readFileSync(optionsFilePath, 'utf8'); // key:value\nkey:value\n...
         let pairs = optionsFile.split('\n'); // key:value
-        pairs.forEach(pair => {
-            let pair = pair.split(':');
-            options[pair[0]] = pair[1];
+        pairs.forEach((pair: string) => {
+            let pairArray = pair.split(':');
+            options[pairArray[0]] = pairArray[1];
         });
         return options;
     }
@@ -67,6 +73,10 @@ class Minecraft {
 
 /** Represents the chat within an instance of Minecraft */
 class Chat {
+	key: string;
+	private commandKey: string;
+	private commandPrefix: string;
+	commands: Command[];
     /**
      * Create a new Chat instance
      * @param {string} [key] the key to open the chat
@@ -74,7 +84,7 @@ class Chat {
      * @param {string} [commandPrefix] the command prefix
      * @param {Command[]} [commands] available commands
      */
-    constructor(key, commandKey, commandPrefix = '/', commands = []) {
+    constructor(key: string, commandKey: string, commandPrefix: string = '/', commands: Command[] = []) {
         let defaultOptions = Minecraft.getOptions('default.options.txt');
         this.key = key ?? defaultOptions['key_key.chat'];
         this.commandKey = commandKey ?? defaultOptions['key_key.command'];
@@ -87,7 +97,7 @@ class Chat {
      * CAUTION: only works if the chat is not already open
      */
     async open() {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             robot.keyTap(this.key);
             setTimeout(() => { resolve(); }, 100); // wait for the chat to open
         });
@@ -97,7 +107,7 @@ class Chat {
      * CAUTION: only works if the chat is already open
      * @param {string} message the string to add
      */
-    add(message) {
+    add(message: string) {
         robot.typeString(message);
     }
 
@@ -106,14 +116,14 @@ class Chat {
      * CAUTION: only works if the chat is not already open
      * @param {string} message the string to type
      */
-    send(message) {
+    async send(message: string) {
         await this.open();
         this.add(message);
     }
 
     /** Open the chat input field with the command prefix */
     async openCommand() {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             robot.keyTap(this.commandKey);
             setTimeout(() => { resolve(); }, 100); // wait for the command to open
         });
@@ -129,12 +139,14 @@ class Chat {
 
 /** Represents a command within an instance of Minecraft */
 class Command {
+	names: string | string[];
+	params: Parameter[];
     /**
      * Create a new Command instance
      * @param {string|string[]} names name and aliases
-     * @param {Parameter|Parameter[]} [params] parameters
+     * @param {Parameter[]} [params] parameters
      */
-    constructor(names, ...params) {
+    constructor(names: string | string[], ...params: Parameter[]) {
         this.names = names;
         this.params = params;
     }
@@ -142,13 +154,16 @@ class Command {
 
 /** Represents a parameter for a command within an instance of Minecraft */
 class Parameter {
+	name: string;
+	type: string;
+	required: boolean;
     /**
      * Create a new Parameter instance
      * @param {string} name name
      * @param {string} [type] value type
      * @param {boolean} [required] required
      */
-    constructor(name, type, required = false) {
+    constructor(name: string, type: string, required: boolean = false) {
         this.name = name;
         this.type = type;
         this.required = required;
