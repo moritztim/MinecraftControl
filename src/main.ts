@@ -15,7 +15,7 @@ const optionsFilePath = path.sep + 'options.txt';
 /** Represents an instance of Minecraft */
 class Minecraft {
 	root?: string;
-	options: any;
+	options: { [x: string]: string; };
 	chat?: Chat;
 	commands?: Command[];
 	version?: string;
@@ -26,8 +26,9 @@ class Minecraft {
      * @param {Chat} [chat] Instance of Chat
      * @param {Command[]} [commands] available commands
 	 * @param {string} [version] version name
+	 * @param { { [x: string]: string; } | {string} } [options] options or path to options.txt
      */
-    constructor(root?: string, chat?: Chat, commands?: Command[], version?: string) {
+    constructor(root?: string, chat?: Chat, commands?: Command[], version?: string, options?: { [x: string]: string; } | string) {
         if (root != undefined) {
             this.root = root;
         } else {
