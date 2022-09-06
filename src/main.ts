@@ -157,9 +157,9 @@ class Parameter {
 	required: boolean;
     /**
      * Create a new Parameter instance
-     * string name name
-     * string type value type
-     * boolean required required
+     * @param name name
+     * @param type value type
+     * @param required required
      */
     constructor(name: string, type: string, required: boolean = false) {
         this.name = name;
