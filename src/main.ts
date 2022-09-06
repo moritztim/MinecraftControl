@@ -17,18 +17,16 @@ class Minecraft {
 	root?: string;
 	options: { [x: string]: string; };
 	chat?: Chat;
-	commands?: Command[];
 	version?: string;
 
     /**
      * Create a new Minecraft instance
      * @param {string} [root] `.minecraft` dir location
      * @param {Chat} [chat] Instance of Chat
-     * @param {Command[]} [commands] available commands
 	 * @param {string} [version] version name
 	 * @param { { [x: string]: string; } | {string} } [options] options or path to options.txt
      */
-    constructor(root?: string, chat?: Chat, commands?: Command[], version?: string, options?: { [x: string]: string; } | string) {
+    constructor(root?: string, chat?: Chat, version?: string, options?: { [x: string]: string; } | string) {
         if (root != undefined) {
             this.root = root;
         } else {
@@ -52,7 +50,6 @@ class Minecraft {
         this.options = Minecraft.getOptions(root + optionsFilePath);
         if (version != undefined) this.version = version;
         this.chat = chat ?? new Chat(this.options['key_key.chat'], this.options['key_key.command'], defaultPrefix);
-        if (commands != undefined) this.commands = commands;
     }
 
     /**
@@ -85,7 +82,7 @@ class Chat {
      * @param {string} [commandPrefix] the command prefix
      * @param {Command[]} [commands] available commands
      */
-    constructor(key: string, commandKey: string, commandPrefix: string = '/', commands: Command[] = []) {
+    constructor(key: string, commandKey: string, commandPrefix: string = '/', commands: Command[]) {
         let defaultOptions = Minecraft.getOptions('./default.options.txt');
         this.key = key ?? defaultOptions['key_key.chat'];
         this.commandKey = commandKey ?? defaultOptions['key_key.command'];
