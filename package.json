@@ -4,7 +4,9 @@
   "description": "Control Minecraft with RobotJS",
   "main": "main.mjs",
   "scripts": {
-    "test": "node test.mjs"
+    "start": "ts-node src/main.ts",
+    "build": "tsc",
+    "test": "ts-node src/test.ts"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,10 @@
   "license": "MIT",
   "dependencies": {
     "robotjs": "^0.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.15",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.2"
   }
 }
