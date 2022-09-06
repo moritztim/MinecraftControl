@@ -28,7 +28,7 @@ class Minecraft {
 	 * @param {string} [version] version name
      */
     constructor(root?: string, chat?: Chat, commands?: Command[], version?: string) {
-        if (root === undefined) {
+        if (root != undefined) {
             this.root = root;
         } else {
             /** root path as array of dirs without the string 'minecraft' */
