@@ -74,7 +74,7 @@ class Chat {
 	key: string;
 	private commandKey: string;
 	private commandPrefix: string;
-	commands: Command[];
+	commands?: Command[];
     /**
      * Create a new Chat instance
      * @param {string} [key] the key to open the chat
@@ -82,7 +82,7 @@ class Chat {
      * @param {string} [commandPrefix] the command prefix
      * @param {Command[]} [commands] available commands
      */
-    constructor(key: string, commandKey: string, commandPrefix: string = '/', commands: Command[]) {
+    constructor(key: string, commandKey: string, commandPrefix: string = '/', commands?: Command[]) {
         let defaultOptions = Minecraft.getOptions('./default.options.txt');
         this.key = key ?? defaultOptions['key_key.chat'];
         this.commandKey = commandKey ?? defaultOptions['key_key.command'];
